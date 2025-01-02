@@ -11,6 +11,12 @@ struct ContentView: View {
     // MARK: - State Variables
     
     @AppStorage("CurrentDapScore") private var currentDapScore: Int = 0
+    @AppStorage("GoodDaps") private var goodDaps: Int = 0
+    @AppStorage("BadDaps") private var badDaps: Int = 0
+
+
+    // Timer to reset the dap score at 2 AM
+    @State private var timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
     
     var body: some View {
         ZStack {
@@ -30,6 +36,7 @@ struct ContentView: View {
                         // Button to decrease the score
                         Button(action: {
                             currentDapScore -= 1
+                            badDaps -= 1
                         }) {
                             Image("BadDap")
                                 .resizable()
@@ -45,9 +52,10 @@ struct ContentView: View {
                     }
                     
                     VStack {
-                        // Button to increase the score and show Pop image
+                        // Button to increase the score
                         Button(action: {
                             currentDapScore += 1
+                            goodDaps += 1
                             
                         }) {
                             Image("GoodDap")
@@ -65,15 +73,35 @@ struct ContentView: View {
                 }
                 .padding()
                 
+                
+                
+                DapSliderView(goodDaps: $goodDaps, badDaps: $badDaps)
+                    .previewLayout(.sizeThatFits)
+                    .padding()
+
                 // Display the current Dap score
-                Text("Current Dap Score: \(currentDapScore)")
+                Text("Today's Dap Score: \(currentDapScore)")
                     .font(.custom("Futura-Bold", size: 24))
                     .foregroundColor(.black)
                     .padding(.top, 20)
+                
             }
             .padding()
-            
-            
+        }
+        .onReceive(timer) { _ in
+            resetScoreAt2AM()
+        }
+    }
+    
+    // MARK: - Helper Functions
+    
+    private func resetScoreAt2AM() {
+        let calendar = Calendar.current
+        let currentHour = calendar.component(.hour, from: Date())
+        let currentMinute = calendar.component(.minute, from: Date())
+        
+        if currentHour == 2 && currentMinute == 0 {
+            currentDapScore = 0
         }
     }
 }

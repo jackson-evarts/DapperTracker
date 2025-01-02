@@ -25,9 +25,10 @@ struct ContentView: View {
                 
                 HStack{
                     
-                    // TODO: Make these buttons
 
                     VStack {
+                        
+                        // TODO: Change this into a button that increases the crisp dap counter, and changes the current dap score.
                         Image("BadDap")
                             .resizable() // Allows resizing of the image
                             .aspectRatio(contentMode: .fit) // Maintains the aspect ratio while fitting within the bounds
@@ -42,8 +43,8 @@ struct ContentView: View {
                     
                     
                     VStack {
-                        // TODO: Display in image named pop when the button is pressed 
-                        
+                        // TODO: Display the image named Pop when the button is pressed
+
                         Image("GoodDap")
                             .resizable() // Allows resizing of the image
                             .aspectRatio(contentMode: .fit) // Maintains the aspect ratio while fitting within the bounds
@@ -56,7 +57,9 @@ struct ContentView: View {
                             .multilineTextAlignment(.center) // Center-align text
                             .frame(maxWidth: .infinity, alignment: .center) // Center horizontally
                     }
-                }
+                } // End Central HStack
+                
+                // TODO: Make a slider that starts in the middle of the
                 
                 
             }

@@ -8,62 +8,72 @@
 import SwiftUI
 
 struct ContentView: View {
-    // TODO: Make a variable named CurrentDapScore that will save an integer in the app for the duration of the day
+    // MARK: - State Variables
+    
+    @AppStorage("CurrentDapScore") private var currentDapScore: Int = 0
     
     var body: some View {
         ZStack {
             // Background color filling the entire screen
-            Color.lightGrey // Background color
-                .edgesIgnoringSafeArea(.all) // Fill entire background
+            Color.lightGrey
+                .edgesIgnoringSafeArea(.all)
             
             VStack {
                 Text("Dap Tracker")
                     .font(.custom("Futura-Bold", size: 40))
                     .foregroundColor(.black)
-                    .multilineTextAlignment(.center) // Center-align text
-                    .frame(maxWidth: .infinity, alignment: .center) // Center horizontally
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity, alignment: .center)
                 
-                HStack{
-                    
-
+                HStack {
                     VStack {
-                        
-                        // TODO: Change this into a button that increases the crisp dap counter, and changes the current dap score.
-                        Image("BadDap")
-                            .resizable() // Allows resizing of the image
-                            .aspectRatio(contentMode: .fit) // Maintains the aspect ratio while fitting within the bounds
-                            .frame(maxWidth: 200, maxHeight: 200) // Sets a reasonable size limit for the image
-                            .frame(maxWidth: .infinity) // Ensures the image is centered horizontally
+                        // Button to decrease the score
+                        Button(action: {
+                            currentDapScore -= 1
+                        }) {
+                            Image("BadDap")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxWidth: 200, maxHeight: 200)
+                                .frame(maxWidth: .infinity)
+                        }
                         Text("Miss")
                             .font(.custom("Futura-Bold", size: 20))
                             .foregroundColor(.black)
-                            .multilineTextAlignment(.center) // Center-align text
-                            .frame(maxWidth: .infinity, alignment: .center) // Center horizontally
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: .infinity, alignment: .center)
                     }
                     
-                    
                     VStack {
-                        // TODO: Display the image named Pop when the button is pressed
-
-                        Image("GoodDap")
-                            .resizable() // Allows resizing of the image
-                            .aspectRatio(contentMode: .fit) // Maintains the aspect ratio while fitting within the bounds
-                            .frame(maxWidth: 200, maxHeight: 200) // Sets a reasonable size limit for the image
-                            .frame(maxWidth: .infinity) // Ensures the image is centered horizontally
-                        
+                        // Button to increase the score and show Pop image
+                        Button(action: {
+                            currentDapScore += 1
+                            
+                        }) {
+                            Image("GoodDap")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxWidth: 200, maxHeight: 200)
+                                .frame(maxWidth: .infinity)
+                        }
                         Text("Crisp Dap")
                             .font(.custom("Futura-Bold", size: 20))
                             .foregroundColor(.black)
-                            .multilineTextAlignment(.center) // Center-align text
-                            .frame(maxWidth: .infinity, alignment: .center) // Center horizontally
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: .infinity, alignment: .center)
                     }
-                } // End Central HStack
+                }
+                .padding()
                 
-                // TODO: Make a slider that starts in the middle of the
-                
-                
+                // Display the current Dap score
+                Text("Current Dap Score: \(currentDapScore)")
+                    .font(.custom("Futura-Bold", size: 24))
+                    .foregroundColor(.black)
+                    .padding(.top, 20)
             }
             .padding()
+            
+            
         }
     }
 }
